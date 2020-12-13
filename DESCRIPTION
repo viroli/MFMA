@@ -5,8 +5,8 @@ Version: 0.1.0
 Author: Cinzia Viroli
 Maintainer: Cinzia Viroli <cinzia.viroli@unibo.it>
 Description: The package fits Mixtures of Factor Analyzers, Factor Mixture models with covariates and Mixtures of Factor Mixture Analyzers via the EM algorithm.
-Depends: R (>= 2.0.1), MASS, mvtnorm
-Imports: MASS, mvtnorm
+Depends: R (>= 2.0.1), MASS, mvtnorm, Matrix
+Imports: MASS, mvtnorm, Matrix
 URL: https://www.unibo.it/sitoweb/cinzia.viroli
 License: GPL-2
 Encoding: UTF-8

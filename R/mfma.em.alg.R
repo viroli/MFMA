@@ -25,7 +25,9 @@ lambda.2=rep(1,k2)
 #####################################################
 
 py<-matrix(0,numobs)
-for (i in 1:k2) for (j in 1:k1) {sigma.tot[i,j,,]=matrix(H[j,,],ncol=r)%*%sigma[i,,]%*%t(matrix(H[j,,],ncol=r))+psi[j,,]
+for (i in 1:k2) for (j in 1:k1) {temp=matrix(H[j,,],ncol=r)%*%sigma[i,,]%*%t(matrix(H[j,,],ncol=r))+psi[j,,]
+                                if (!isSymmetric(temp)) temp=forceSymmetric(temp)
+                                 sigma.tot[i,j,,]=temp
                                  if (det(sigma.tot[i,j,,])<0.000000001) diag(sigma.tot[i,j,,])<-diag(sigma.tot[i,j,,])+0.5
                                  py.s1.s2[i,j,]<-dmvnorm(y,muf[,j]+t(matrix(H[j,,],ncol=r)%*%mu[i,]),sigma.tot[i,j,,])
                                  py.s1.s2=ifelse(is.na(py.s1.s2),0.0000000001,py.s1.s2)
