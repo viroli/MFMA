@@ -221,7 +221,10 @@ if (k2>1) s2=apply(ps2.y,2,order)[k2,] else s2=rep(k2,numobs)
 if (k1>1) s1=apply(ps1.y,2,order)[k1,] else s1=rep(k1,numobs)
 if (k1*k2>1) s12.bis=apply(ps1s2.y,3,order)[k1*k2,] else s12.bis=rep(k1*k2,numobs)
 
-out<-list(H=H,w1=w1,w2=w2,mu=mu,psi=psi,likelihood=likelihood,sigma=sigma,cl1=s1,cl2=s2,cl12=s12.bis,muf=muf,ps1.y=ps1.y,ps2.y=ps2.y,ps1s2.y=ps1s2.y)
+out<-list(H=H,w1=w1,w2=w2,mu=mu,psi=psi,
+          likelihood=likelihood,sigma=sigma,
+          s1=s1,s2=s2,s12=s12.bis,muf=muf,
+          ps1.y=ps1.y,ps2.y=ps2.y,ps1s2.y=ps1s2.y)
 return(out)
 }
 
