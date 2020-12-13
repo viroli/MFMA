@@ -1,8 +1,8 @@
 `mfma.em.alg` <-
 function(y,numobs,r,k1,k2,p,it,H,w1,w2,mu,sigma,eps,psi,lik,muf,model.names)
-                     
-                     
-{                 
+
+
+{
 likelihood<-NULL
 hh<-0
 ratio<-1000
@@ -37,8 +37,8 @@ for (i in 1:k2) for (j in 1:k1) {sigma.tot[i,j,,]=matrix(H[j,,],ncol=r)%*%sigma[
 cl=NULL
 
 while ((hh < it) & (ratio > eps )) {
- hh<-hh+1 
-    
+ hh<-hh+1
+
 Ez.y.s2<-array(0,c(k2,r,numobs))
 Ez.y.s1<-array(0,c(k1,r,numobs))
 Ezz.y.s2<-array(0,c(k2,r,r,numobs))
@@ -63,10 +63,10 @@ for (i in 1:k2) for (j in 1:k1) {
                             if (r>1) {
                             #temp<-(t(roy[i,j,,]))%o%(roy[i,j,,])
                             #temp<-apply(temp,c(2,3),diag)
-                            #temp<-aperm(temp,c(2,3,1))    
-                            for (h in 1:numobs) temp[,,h]=(roy[i,j,,h])%*%t(roy[i,j,,h])                          
-                            temp2<-array(chsi[i,j,,],c(r,r,numobs))                                            
-                            Ezz.y.s1.s2[i,j,,,]<-temp+temp2 } else Ezz.y.s1.s2[i,j,r,r,]<-roy[i,j,,]^2+rep(chsi[i,j,,],numobs)         
+                            #temp<-aperm(temp,c(2,3,1))
+                            for (h in 1:numobs) temp[,,h]=(roy[i,j,,h])%*%t(roy[i,j,,h])
+                            temp2<-array(chsi[i,j,,],c(r,r,numobs))
+                            Ezz.y.s1.s2[i,j,,,]<-temp+temp2 } else Ezz.y.s1.s2[i,j,r,r,]<-roy[i,j,,]^2+rep(chsi[i,j,,],numobs)
                                  }
 
 
@@ -110,7 +110,7 @@ for (h1 in 1:r) {for (j in 1:k1) {Ez.y.s2[,h1,]<-Ez.y.s2[,h1,]+roy[,j,h1,]*ps1.y
                  for (i in 1:k2) {Ez.y.s1[,h1,]<-Ez.y.s1[,h1,]+roy[i,,h1,]*ps2.y.s1[i,,]
                                 for (h2 in 1:r) Ezz.y.s1[,h1,h2,]<-Ezz.y.s1[,h1,h2,]+Ezz.y.s1.s2[i,,h1,h2,]*ps2.y.s1[i,,]}
                  }
-              
+
 
 ### M-step stima w1 e w2
 w2<-rowMeans(ps2.y)
@@ -122,16 +122,16 @@ w1<-rowMeans(ps1.y)
 
 
 #ptm <- proc.time()
-for (i in 1:k2) {   
+for (i in 1:k2) {
                 Ez.y.s2[i,,]=ifelse(is.na(Ez.y.s2[i,,]),rowMeans(matrix(Ez.y.s2[i,,],ncol=numobs),na.rm=TRUE),Ez.y.s2[i,,])
                 if (r>1) Ezz.y.s2[i,,,]=ifelse(is.na(Ezz.y.s2[i,,,]),apply(Ezz.y.s2[i,,,],c(1,2),mean,na.rm=TRUE),Ezz.y.s2[i,,,])
-                if (r==1) Ezz.y.s2[i,,,]=ifelse(is.na(Ezz.y.s2[i,,,]),mean(Ezz.y.s2[i,,,],na.rm=TRUE),Ezz.y.s2[i,,,])              
+                if (r==1) Ezz.y.s2[i,,,]=ifelse(is.na(Ezz.y.s2[i,,,]),mean(Ezz.y.s2[i,,,],na.rm=TRUE),Ezz.y.s2[i,,,])
                 mu[i,]<-t((Ez.y.s2[i,,]%*%ps2.y[i,])/sum(ps2.y[i,]))
                 #sigma[i,,]<-array.matrix((Ezz.y.s2[i,,,]-array(mu[i,]%*%t(mu[i,]),c(r,r,numobs))),matrix(ps2.y[i,]))
                 sigma[i,,]<-apply(((Ezz.y.s2[i,,,]-array(mu[i,]%*%t(mu[i,]),c(r,r,numobs)))*aperm(array(matrix(ps2.y[i,]),c(numobs,r,r)),c(2,3,1))),1,rowSums)
                 }
-                 
-# print(proc.time()-ptm)                 
+
+# print(proc.time()-ptm)
 
 
 
@@ -152,7 +152,7 @@ for (j in 1:k1) {
                 if (r>1) Ezz.y.s1[j,,,]=ifelse(is.na(Ezz.y.s1[j,,,]),apply(Ezz.y.s1[j,,,],c(1,2),mean,na.rm=TRUE),Ezz.y.s1[j,,,])
                 if (r==1) Ezz.y.s1[j,,,]=ifelse(is.na(Ezz.y.s1[j,,,]),mean(Ezz.y.s1[j,,,],na.rm=TRUE),Ezz.y.s1[j,,,])
                 #if (r>1) EEzz.y.s1=array.matrix(Ezz.y.s1[j,,,],t(t(ps1.y[j,])))[,,1]/sum(ps1.y[j,])
-                if (r>1) EEzz.y.s1=apply((Ezz.y.s1[j,,,]*(aperm(array(t(t(ps1.y[j,])),c(numobs,r,r)),c(2,3,1)))),1,rowSums)/sum(ps1.y[j,])               
+                if (r>1) EEzz.y.s1=apply((Ezz.y.s1[j,,,]*(aperm(array(t(t(ps1.y[j,])),c(numobs,r,r)),c(2,3,1)))),1,rowSums)/sum(ps1.y[j,])
                 if (r==1) EEzz.y.s1=Ezz.y.s1[j,,,]%*%(ps1.y[j,])/sum(ps1.y[j,])
                 H[j,,]=(t((y-t(matrix(muf[,j],p,numobs)))*matrix(ps1.y[j,],numobs,p))%*%(t(matrix(Ez.y.s1[j,,],ncol=numobs))*matrix(ps1.y[j,],numobs,r)))%*%ginv(EEzz.y.s1)/sum(ps1.y[j,])
                 H[j,,]=ifelse(is.na(H[j,,]),0.1,H[j,,])
@@ -182,15 +182,15 @@ if (model.names[1]==3) for (j in 1:k1) {traccia=sum(diag(psi[j,,]))
 ################################################################################
 
 
-###correzione per identificabilità
+###correzione per identificabilit?
 
 temp1<-colSums(array(w2,c(k2,r,r))*sigma)
 temp2<-matrix(0,r,r)
 for (i in 1:k2) temp2<-temp2+w2[i]*(mu[i,]%*%t(mu[i,]))
-temp3<-matrix(colSums(matrix(w2,k2,r)*mu))   
+temp3<-matrix(colSums(matrix(w2,k2,r)*mu))
 
 var.z<-temp1+temp2-temp3%*%t(temp3)
-A<-(chol(var.z)) 
+A<-(chol(var.z))
 for (i in 1:k2) {sigma[i,,]<-t(ginv(A))%*%sigma[i,,]%*%ginv(A)
                 mu[i,]<-t(ginv(A))%*%mu[i,]
 }
@@ -207,21 +207,21 @@ for (i in 1:k2) for (j in 1:k1) {sigma.tot[i,j,,]=matrix(H[j,,],ncol=r)%*%sigma[
                                  }
 ps1s2.y=ps1s2.y/aperm(array(py,c(numobs,k2,k1)),c(2,3,1))
 
-             
+
 temp<- sum(log(py))
 likelihood<-c(likelihood,temp)
 ratio<-(temp-lik)/abs(lik)
 if (hh < 500) ratio<-2*eps
 lik<-temp
 
-if (k1*k2>1) s12.bis=apply(ps1s2.y,3,order)[k1*k2,] else s12.bis=rep(k1*k2,numobs) 
+if (k1*k2>1) s12.bis=apply(ps1s2.y,3,order)[k1*k2,] else s12.bis=rep(k1*k2,numobs)
                                    }
 
 if (k2>1) s2=apply(ps2.y,2,order)[k2,] else s2=rep(k2,numobs)
-if (k1>1) s1=apply(ps1.y,2,order)[k1,] else s1=rep(k1,numobs) 
-if (k1*k2>1) s12.bis=apply(ps1s2.y,3,order)[k1*k2,] else s12.bis=rep(k1*k2,numobs) 
+if (k1>1) s1=apply(ps1.y,2,order)[k1,] else s1=rep(k1,numobs)
+if (k1*k2>1) s12.bis=apply(ps1s2.y,3,order)[k1*k2,] else s12.bis=rep(k1*k2,numobs)
 
-out<-list(H=H,w1=w1,w2=w2,mu=mu,psi=psi,likelihood=likelihood,sigma=sigma,s1=s1,s2=s2,s12=s12.bis,muf=muf,ps1.y=ps1.y,ps2.y=ps2.y,ps1s2.y=ps1s2.y)
+out<-list(H=H,w1=w1,w2=w2,mu=mu,psi=psi,likelihood=likelihood,sigma=sigma,cl1=s1,cl2=s2,cl12=s12.bis,muf=muf,ps1.y=ps1.y,ps2.y=ps2.y,ps1s2.y=ps1s2.y)
 return(out)
 }
 

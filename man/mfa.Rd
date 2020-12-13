@@ -37,7 +37,7 @@ mfa(y, k, r, it = 15, eps = 0.001, init = NULL,
   \item{aic}{The AIC value}
   \item{clc}{The CLC value}
   \item{icl.bic}{The ICL BIC value}
-  \item{s}{Posterior classification}
+  \item{cl}{Posterior classification}
   \item{ps.y}{Posterior probabilities}
   \item{cptime}{The computational time}
 }

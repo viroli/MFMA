@@ -46,7 +46,7 @@ mfma(y, k1, k2, r, it = 15, eps = 0.001, init = NULL,
   \item{aic}{The AIC value}
   \item{clc}{The CLC value}
   \item{icl.bic}{The ICL BIC value.}
-  \item{s1,s2,s12}{Classification of the units performed through the three posteriors related to the double mixture}
+  \item{cl1,cl2,cl12}{Classification of the units performed through the three posteriors related to the double mixture}
   \item{cptime}{The computational time.}
 }
 
