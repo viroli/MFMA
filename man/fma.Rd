@@ -34,7 +34,7 @@ coefficients which are allowed to vary across the components. When no covariate 
   \item{psi}{The noise diagonal variance matrix}
   \item{ph.y}{The posterior distribution of each mixture components}
   \item{z}{The reconstructed factor scores by Thomposon method}
-  \item{cl}{The posterior classification}
+  \item{s}{The posterior classification}
   \item{bic}{The BIC value}
   \item{aic}{The AIC value}
   \item{pc.time}{Computational time in seconds}

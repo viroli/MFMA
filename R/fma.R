@@ -77,6 +77,8 @@ pen<-h*log(numobs)
 lik<-likelihood[length(likelihood)]
 bic<--2*lik+pen
 aic<--2*lik+2*h
-output<-list(H=H,lik=likelihood,w=w,Beta=Beta,psi=psi,sigma=sigma,ph.y=ph.y,cl=index,z=z,phi=phi,bic=bic,pctime=proc.time()-ptm,aic=aic)
+output<-list(H=H,lik=likelihood,w=w,Beta=Beta,psi=psi,
+             sigma=sigma,ph.y=ph.y,s=index,z=z,phi=phi,
+             bic=bic,pctime=proc.time()-ptm,aic=aic)
 invisible(output)
 }

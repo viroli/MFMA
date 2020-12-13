@@ -37,14 +37,14 @@ mfa(y, k, r, it = 15, eps = 0.001, init = NULL,
   \item{aic}{The AIC value}
   \item{clc}{The CLC value}
   \item{icl.bic}{The ICL BIC value}
-  \item{cl}{Posterior classification}
+  \item{s}{Posterior classification}
   \item{ps.y}{Posterior probabilities}
   \item{cptime}{The computational time}
 }
 
 
 \references{McLachlan, G., D. Peel, and R. Bean (2003). Modelling high-dimensional
-data by mixtures of factor analyzers. Computational Statistics \& Data
+data by mixtures of factor analyzers. Computational Statistics & Data
 Analysis 41 (3), 379 - 388.
 }
 

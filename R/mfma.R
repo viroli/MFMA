@@ -8,11 +8,11 @@ if (scaling) y<-scale(y)
 numobs<-nrow(y)
 p<-ncol(y)
 ybar<- apply(y, 2, mean)
-y<-scale(y, ybar, scale=FALSE) 
+y<-scale(y, ybar, scale=FALSE)
 lik<--100000000000
 muf=matrix(0,p,k1)
 ### operazioni preliminari ed inizializzazione dei parametri
-### l'inizializzazione è casuale se non altrimenti specificata per mu e sigma
+### l'inizializzazione ? casuale se non altrimenti specificata per mu e sigma
 ### per i pesi l'inizializzazione viene fatta sulla base della partizione k medie
 
 #output<-hc(modelName = "VVV", data = y)
@@ -25,7 +25,7 @@ psi<-array(0,c(k1,p,p))
 H<-array(0,c(k1,p,r))
 
 
-if (is.null(init)) {for (j in 1:k1) { stima=try(factanal(y[s1==j,],r,rotation="none"),silent=TRUE) 
+if (is.null(init)) {for (j in 1:k1) { stima=try(factanal(y[s1==j,],r,rotation="none"),silent=TRUE)
                                           if (is.character(stima)) {psi[j,,]<-0.1*diag(p)
                                            H[j,,]<-matrix(runif(p*r),p,r)}
 
@@ -34,8 +34,8 @@ if (is.null(init)) {for (j in 1:k1) { stima=try(factanal(y[s1==j,],r,rotation="n
 
                             }} else {psi<-init$psi
                                     H=init$H}
-                                               
-                                               
+
+
 if (is.null(init$muf)) for (j in 1:k1) muf[,j]=colMeans(y[s1==j,])
 if (is.null(init$w1)) w1<-matrix(table(s1)/numobs) else w1<-init$w1
 
@@ -45,7 +45,7 @@ z=matrix(factanal(y,r,scores="Bartlett")$scores,numobs)
 if (k2>1) s2=kmeans(z,k2)$cl else s2=rep(1,numobs)
 for  (i in 1:k2) if ((table(s2)[i])<2) s2[sample(1:numobs,2,replace=FALSE)]=i
 
-mu=matrix(0,k2,r)                     
+mu=matrix(0,k2,r)
 sigma<-array(0,c(k2,r,r))
 
 for (i in 1:k2) {
@@ -104,7 +104,7 @@ icl.bic<--2*lik+2*EN+h*log(numobs)
 output<-list(h=h,k1=k1,H=H,lik=likelihood,w2=w2,w1=w1,mu=mu,
              psi=psi,k2=k2,sigma=sigma,p=p,numobs=numobs,ph.y=ps1s2.y,
              scaling=scaling,r=r,s2=s2,s1=s1,bic=bic,aic=aic,s12=s12.bis,
-             clc=clc,icl.bic=icl.bic,cptime=proc.time()-ptm,seme=seed,muf=muf,h=h)
+             clc=clc,icl.bic=icl.bic,cptime=proc.time()-ptm,muf=muf,h=h)
 invisible(output)
 }
 

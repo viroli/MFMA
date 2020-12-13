@@ -92,8 +92,8 @@ clc<--2*lik+2*EN
 icl.bic<--2*lik+2*EN+h*log(numobs)
 
 output<-list(h=h,k=k,H=H,lik=likelihood,w=w1,psi=psi,p=p,numobs=numobs,
-             scaling=scaling,r=r,cl=s1,bic=bic,aic=aic,clc=clc,icl.bic=icl.bic,
-             cptime=proc.time()-ptm,seme=seed,mu=muf,h=h,ps.y=ps1.y)
+             scaling=scaling,r=r,s=s1,bic=bic,aic=aic,clc=clc,icl.bic=icl.bic,
+             cptime=proc.time()-ptm,mu=muf,h=h,ps.y=ps1.y)
 invisible(output)
 }
 
